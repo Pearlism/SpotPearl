@@ -1,5 +1,5 @@
   <p align="center">
-  <a href="https://github.com/SpotX-Official/SpotX/releases"><img src="https://spotx-official.github.io/images/logos/logo.png" /></a>
+  <a href="https://github.com/SpotX-Official/SpotX/releases"><img src="https://media.discordapp.net/attachments/1194033755606749215/1237937018747486279/image.png?ex=663d7631&is=663c24b1&hm=650d57b81719ce193788b3015e4eceeb9ef0c0ed2715d0386adf864d412e60fe&=&format=webp&quality=lossless&width=1404&height=448" /></a>
 </p>
 
    <h2> <div align="center"><b> Modified Spotify Client for Windows </b></div> </h2>
