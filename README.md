@@ -173,4 +173,4 @@ or
 
 <h1>Disclaimer</h1>
 
- SpotX is a modified version of the official Spotify client, provided as an evaluation version, you use it at your own risk.
+ SpotPearl is a modified version of the official Spotify client, provided as an evaluation version, you use it at your own risk.
