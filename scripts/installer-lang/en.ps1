@@ -1,8 +1,8 @@
 [PSCustomObject]@{
     Welcome         = "
-╔══════════════════════════════╗
-║ Welcome to SpotX for Windows ║
-╚══════════════════════════════╝"
+╔══════════════════════════════════╗
+║ Welcome to SpotPearl for Windows ║
+╚══════════════════════════════════╝"
     Incorrect       = "Oops, an incorrect value,"
     Incorrect2      = "enter again through "
     Download        = "Error downloading"
@@ -39,11 +39,10 @@
     ModSpoti        = "Patching Spotify..."
     Error           = "Error"
     FileLocBroken   = "Location of Spotify files is broken, uninstall Spotify client and run the script again"
-    Spicetify       = "Spicetify detected, it must be installed after SpotX, open recommended actions in FAQ ? [Y/N]"
-    NoRestore       = "SpotX has already been installed, xpui.bak not found. `nPlease uninstall Spotify client and run Install.bat again"
+    Spicetify       = "Spicetify detected, it must be installed after SpotPearl, open recommended actions in FAQ ? [Y/N]"
+    NoRestore       = "SpotPearl has already been installed, xpui.bak not found. `nPlease uninstall Spotify client and run Install.bat again"
     InstallComplete = "installation completed"
     HostInfo        = "Unwanted URLs found in hosts file"
     HostBak         = "Backing up hosts.bak..."
     HostDel         = "Trying to remove unwanted URLs from the original hosts file..."
     HostError       = "Something went wrong while editing the hosts file, edit it manually or run the script as administrator"
-}
