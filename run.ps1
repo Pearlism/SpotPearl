@@ -64,17 +64,11 @@ param
     [Parameter(HelpMessage = 'Disable new right sidebar.')]
     [switch]$rightsidebar_off,
 
-    [Parameter(HelpMessage = 'Do not enable enhance playlist.')]
-    [switch]$enhance_playlist_off,
-    
-    [Parameter(HelpMessage = 'Do not enable enhance liked songs.')]
-    [switch]$enhance_like_off,
-
-    [Parameter(HelpMessage = 'Enable enhance playlist & liked songs.')]
-    [switch]$enhanceSongs,
-
     [Parameter(HelpMessage = 'it`s killing the heart icon, you`re able to save and choose the destination for any song, playlist, or podcast')]
     [switch]$plus,
+
+    [Parameter(HelpMessage = 'Enabled the big cards for home page')]
+    [switch]$canvasHome,
 
     [Parameter(HelpMessage = 'Enable funny progress bar.')]
     [switch]$funnyprogressBar,
@@ -96,7 +90,7 @@ param
 
     [Parameter(HelpMessage = 'Static color for lyrics.')]
     [ArgumentCompleter({ param($cmd, $param, $wordToComplete)
-            [array] $validValues = @('default', 'red', 'orange', 'yellow', 'spotify', 'blue', 'purple', 'strawberry', 'pumpkin', 'sandbar', 'radium', 'oceano', 'royal', 'github', 'discord', 'drot', 'forest', 'fresh', 'zing', 'pinkle', 'krux', 'blueberry', 'postlight', 'relish', 'turquoise')
+            [array] $validValues = @('blue', 'blueberry', 'discord', 'drot', 'default', 'forest', 'fresh', 'github', 'lavender', 'orange', 'postlight', 'pumpkin', 'purple', 'radium', 'relish', 'red', 'sandbar', 'spotify', 'spotify#2', 'strawberry', 'turquoise', 'yellow', 'zing', 'pinkle', 'krux', 'royal', 'oceano')
             $validValues -like "*$wordToComplete*"
         })]
     [string]$lyrics_stat,
@@ -128,40 +122,48 @@ function Format-LanguageCode {
         [string]$LanguageCode
     )
     
-    
     $supportLanguages = @(
-        'en', 'ru', 'it', 'tr', 'ka', 'pl', 'es', 'fr', 'hi', 'pt', 'id', 'vi', 'ro', 'de', 'hu', 'zh', 'zh-TW', 'ko', 'ua', 'fa', 'sr', 'lv', 'bn', 'el', 'fi', 'ja', 'fil', 'sv', 'sk', 'ta', 'cs'
+        'bn', 'cs', 'de', 'el', 'en', 'es', 'fa', 'fi', 'fil', 'fr', 'hi', 'hu', 
+        'id', 'it', 'ja', 'ka', 'ko', 'lv', 'pl', 'pt', 'ro', 'ru', 'sk', 'sr', 
+        'sv', 'ta', 'tr', 'ua', 'vi', 'zh', 'zh-TW'
     )
-    
     
     # Trim the language code down to two letter code.
     switch -Regex ($LanguageCode) {
+        '^bn' {
+            $returnCode = 'bn'
+            break
+        }
+        '^cs' {
+            $returnCode = 'cs'
+            break
+        }
+        '^de' {
+            $returnCode = 'de'
+            break
+        }
+        '^el' {
+            $returnCode = 'el'
+            break
+        }
         '^en' {
             $returnCode = 'en'
             break
         }
-        '^(ru|py)' {
-            $returnCode = 'ru'
-            break
-        }
-        '^it' {
-            $returnCode = 'it'
-            break
-        }
-        '^tr' {
-            $returnCode = 'tr'
-            break
-        }
-        '^ka' {
-            $returnCode = 'ka'
-            break
-        }
-        '^pl' {
-            $returnCode = 'pl'
-            break
-        }
         '^es' {
             $returnCode = 'es'
+            break
+        }
+        '^fa' {
+            $returnCode = 'fa'
+            break
+        }
+        '^fi$' {
+            $returnCode = 'fi'
+            break
+        }
+        '^fil' {
+            $returnCode = 'fil'
             break
         }
         '^fr' {
@@ -172,28 +174,76 @@ function Format-LanguageCode {
             $returnCode = 'hi'
             break
         }
-        '^pt' {
-            $returnCode = 'pt'
+        '^hu' {
+            $returnCode = 'hu'
             break
         }
         '^id' {
             $returnCode = 'id'
             break
         }
-        '^vi' {
-            $returnCode = 'vi'
+        '^it' {
+            $returnCode = 'it'
+            break
+        }
+        '^ja' {
+            $returnCode = 'ja'
+            break
+        }
+        '^ka' {
+            $returnCode = 'ka'
+            break
+        }
+        '^ko' {
+            $returnCode = 'ko'
+            break
+        }
+        '^lv' {
+            $returnCode = 'lv'
+            break
+        }
+        '^pl' {
+            $returnCode = 'pl'
+            break
+        }
+        '^pt' {
+            $returnCode = 'pt'
             break
         }
         '^ro' {
             $returnCode = 'ro'
             break
         }
-        '^de' {
-            $returnCode = 'de'
+        '^(ru|py)' {
+            $returnCode = 'ru'
             break
         }
-        '^hu' {
-            $returnCode = 'hu'
+        '^sk' {
+            $returnCode = 'sk'
+            break
+        }
+        '^sr' {
+            $returnCode = 'sr'
+            break
+        }
+        '^sv' {
+            $returnCode = 'sv'
+            break
+        }
+        '^ta' {
+            $returnCode = 'ta'
+            break
+        }
+        '^tr' {
+            $returnCode = 'tr'
+            break
+        }
+        '^ua' {
+            $returnCode = 'ua'
+            break
+        }
+        '^vi' {
+            $returnCode = 'vi'
             break
         }
         '^(zh|zh-CN)$' {
@@ -202,63 +252,6 @@ function Format-LanguageCode {
         }
         '^zh-TW' {
             $returnCode = 'zh-TW'
-            break
-        }
-        '^ko' {
-            $returnCode = 'ko'
-            break
-        }
-        '^ua' {
-            $returnCode = 'ua'
-            break
-        }
-        '^fa' {
-            $returnCode = 'fa'
-            break
-        }
-        '^sr' {
-            $returnCode = 'sr'
-            break
-        }
-        '^lv' {
-            $returnCode = 'lv'
-            break
-        }
-        '^bn' {
-            $returnCode = 'bn'
-            break
-        }
-        '^el' {
-            $returnCode = 'el'
-            break
-        }
-        '^fi$' {
-            $returnCode = 'fi'
-            break
-        }
-        '^ja' {
-            $returnCode = 'ja'
-            break
-        
-        }
-        '^fil' {
-            $returnCode = 'fil'
-            break
-        }
-        '^sv' {
-            $returnCode = 'sv'
-            break
-        }        
-        '^sk' {
-            $returnCode = 'sk'
-            break
-        }
-        '^ta' {
-            $returnCode = 'ta'
-            break
-        }
-        '^cs' {
-            $returnCode = 'cs'
             break
         }
         Default {
@@ -298,18 +291,24 @@ if ($psv -ge 7) {
 # add Tls12
 [Net.ServicePointManager]::SecurityProtocol = 3072
 
+function Get-Link {
+    param (
+        [Alias("e")]
+        [string]$endlink
+    )
+
+    switch ($mirror) {
+        $true { return "https://spotx-official.github.io/SpotX" + $endlink }
+        default { return "https://raw.githubusercontent.com/SpotX-Official/SpotX/main" + $endlink }
+    }
+}
 
 function CallLang($clg) {
 
-    $urlLang = switch ($mirror) {
-        $true { "https://spotx-official.github.io/SpotX/scripts/installer-lang/$clg.ps1" }
-        default { "https://raw.githubusercontent.com/SpotX-Official/SpotX/main/scripts/installer-lang/$clg.ps1" }
-    }
-    
     $ProgressPreference = 'SilentlyContinue'
     
     try {
-        $response = (iwr -Uri $urlLang -UseBasicParsing).Content
+        $response = (iwr -Uri (Get-Link -e "/scripts/installer-lang/$clg.ps1") -UseBasicParsing).Content
         if ($mirror) { $response = [System.Text.Encoding]::UTF8.GetString($response) }
         Invoke-Expression $response
     }
@@ -369,7 +368,7 @@ if (!($version -and $version -match $match_v)) {
     }
     else {  
         # Recommended version for Win 10-12
-        $onlineFull = "1.2.37.701.ge66eb7bc-1204"
+        $onlineFull = "1.2.46.462.gf57913e0-290"
     }
 }
 else {
@@ -389,30 +388,41 @@ $online = ($onlineFull -split ".g")[0]
 
 function Get {
     param (
+        [Parameter(Mandatory = $true)]
         [string]$Url,
         [int]$MaxRetries = 3,
-        [int]$RetrySeconds = 3
+        [int]$RetrySeconds = 3,
+        [string]$OutputPath
     )
 
-    $retries = 0
+    $params = @{
+        Uri        = $Url
+        TimeoutSec = 15
+    }
 
-    while ($retries -lt $MaxRetries) {
+    if ($OutputPath) {
+        $params['OutFile'] = $OutputPath
+    }
+
+    for ($i = 0; $i -lt $MaxRetries; $i++) {
         try {
-            return Invoke-RestMethod -Uri $Url
+            $response = Invoke-RestMethod @params
+            return $response
         }
         catch {
-            Write-Warning "Request failed: $_"
-            $retries++
-            Start-Sleep -Seconds $RetrySeconds
+            Write-Warning "Attempt $($i+1) of $MaxRetries failed: $_"
+            if ($i -lt $MaxRetries - 1) {
+                Start-Sleep -Seconds $RetrySeconds
+            }
         }
     }
+
     Write-Host
     Write-Host "ERROR: " -ForegroundColor Red -NoNewline; Write-Host "Failed to retrieve data from $Url" -ForegroundColor White
-    Write-Host 
-
+    Write-Host
     return $null
-
 }
+
 
 function incorrectValue {
 
@@ -478,11 +488,11 @@ function downloadSp() {
     
     try { 
         if ($curl_check) {
-            $stcode = curl.exe -Is -w "%{http_code} \n" -o /dev/null $web_Url --retry 2 --ssl-no-revoke
+            $stcode = curl.exe -Is -w "%{http_code} \n" -o /dev/null -k $web_Url --retry 2 --ssl-no-revoke
             if ($stcode.trim() -ne "200") {
                 Write-Host "Curl error code: $stcode"; throw
             }
-            curl.exe -q $web_Url -o $local_Url --progress-bar --retry 3 --ssl-no-revoke
+            curl.exe -q -k $web_Url -o $local_Url --progress-bar --retry 3 --ssl-no-revoke
             return
         }
         if (!($curl_check ) -and $null -ne (Get-Module -Name BitsTransfer -ListAvailable)) {
@@ -506,11 +516,11 @@ function downloadSp() {
         try { 
 
             if ($curl_check) {
-                $stcode = curl.exe -Is -w "%{http_code} \n" -o /dev/null $web_Url --retry 2 --ssl-no-revoke
+                $stcode = curl.exe -Is -w "%{http_code} \n" -o /dev/null -k $web_Url --retry 2 --ssl-no-revoke
                 if ($stcode.trim() -ne "200") {
                     Write-Host "Curl error code: $stcode"; throw
                 }
-                curl.exe -q $web_Url -o $local_Url --progress-bar --retry 3 --ssl-no-revoke
+                curl.exe -q -k $web_Url -o $local_Url --progress-bar --retry 3 --ssl-no-revoke
                 return
             }
             if (!($curl_check ) -and $null -ne (Get-Module -Name BitsTransfer -ListAvailable) -and !($curl_check )) {
@@ -898,12 +908,7 @@ $ch = $null
 # updated Russian translation
 if ($langCode -eq 'ru' -and [version]$offline -ge [version]"1.1.92.644") { 
     
-    $urlru = switch ($mirror) {
-        $true { "https://spotx-official.github.io/SpotX/patches/Augmented%20translation/ru.json" }
-        default { "https://raw.githubusercontent.com/SpotX-Official/SpotX/main/patches/Augmented%20translation/ru.json" }
-    }
-
-    $webjsonru = Get -Url $urlru
+    $webjsonru = Get -Url (Get-Link -e "/patches/Augmented%20translation/ru.json")
 
     if ($webjsonru -ne $null) {
 
@@ -971,13 +976,7 @@ if ($ch -eq 'n') {
 
 $ch = $null
 
-
-$url = switch ($mirror) {
-    $true { "https://spotx-official.github.io/SpotX/patches/patches.json" }
-    default { "https://raw.githubusercontent.com/SpotX-Official/SpotX/main/patches/patches.json" }
-}
-
-$webjson = Get -Url $url -RetrySeconds 5
+$webjson = Get -Url (Get-Link -e "/patches/patches.json") -RetrySeconds 5
         
 if ($webjson -eq $null) { 
     Write-Host
@@ -1075,55 +1074,6 @@ function Helper($paramname) {
             $contents = "disablesentry"
             $json = $webjson.others
         }
-        "Lyrics-color" { 
-            $pasttext = $webjson.others.themelyrics.theme.$lyrics_stat.pasttext
-            $current = $webjson.others.themelyrics.theme.$lyrics_stat.current
-            $next = $webjson.others.themelyrics.theme.$lyrics_stat.next
-            $background = $webjson.others.themelyrics.theme.$lyrics_stat.background
-            $hover = $webjson.others.themelyrics.theme.$lyrics_stat.hover
-            $maxmatch = $webjson.others.themelyrics.theme.$lyrics_stat.maxmatch
-
-            if ([version]$offline -lt [version]"1.1.99.871") { $lyrics = "lyricscolor1"; $contents = $lyrics }
-            if ([version]$offline -ge [version]"1.1.99.871") { $lyrics = "lyricscolor2"; $contents = $lyrics }
-
-            # xpui.js or xpui-routes-lyrics.js
-            if ([version]$offline -ge [version]"1.1.99.871") {
-
-                $full_previous = Mod-F -template $webjson.others.$lyrics.add[0] -arguments $pasttext 
-                $full_current = Mod-F -template $webjson.others.$lyrics.add[1] -arguments $current
-                $full_next = Mod-F -template $webjson.others.$lyrics.add[2] -arguments $next
-                $full_lyrics = Mod-F -template $webjson.others.$lyrics.add[3] -arguments $full_previous, $full_current, $full_next
-                $webjson.others.$lyrics.add[3] = $full_lyrics
-                $webjson.others.$lyrics.replace[1] = '$1' + '"' + $pasttext + '"'  
-                $webjson.others.$lyrics.replace[2] = '$1' + '"' + $current + '"'  
-                $webjson.others.$lyrics.replace[3] = '$1' + '"' + $next + '"'  
-                $webjson.others.$lyrics.replace[4] = '$1' + '"' + $background + '"'
-                $webjson.others.$lyrics.replace[5] = '$1' + '"' + $hover + '"'   
-                $webjson.others.$lyrics.replace[6] = '$1' + '"' + $maxmatch + '"'
-                if ([version]$offline -ge [version]"1.2.6.861") {
-                    $webjson.others.$lyrics.replace[7] = '$1' + '"' + $maxmatch + '"' + '$3'
-                }
-                else {
-                    $webjson.others.$lyrics.match = $webjson.others.$lyrics.match | Where-Object { $_ -ne $webjson.others.$lyrics.match[7] }
-                }
-                if ([version]$offline -ge [version]"1.2.3.1107") {
-                    $webjson.others.$lyrics.replace[8] = $webjson.others.$lyrics.replace[8] -f $background
-                }
-            }
-
-            # xpui-routes-lyrics.css
-            if ([version]$offline -lt [version]"1.1.99.871") {
-                $webjson.others.$lyrics.replace[0] = '$1' + $pasttext
-                $webjson.others.$lyrics.replace[1] = '$1' + $current
-                $webjson.others.$lyrics.replace[2] = '$1' + $next
-                $webjson.others.$lyrics.replace[3] = $background 
-                $webjson.others.$lyrics.replace[4] = '$1' + $hover 
-                $webjson.others.$lyrics.replace[5] = '$1' + $maxmatch 
-            }
-            $name = "patches.json.others."
-            $n = $name_file
-            $json = $webjson.others
-        }
         "Discriptions" {  
             # Add discriptions (xpui-desktop-modals.js)
 
@@ -1155,30 +1105,35 @@ function Helper($paramname) {
             $Disable = $webjson.others.DisableExp
             $Custom = $webjson.others.CustomExp
 
-            if ($enhance_like_off) { Remove-Json -j $Enable -p'EnhanceLikedSongs' }
-            if ($enhance_playlist_off) { Remove-Json -j $Enable -p 'EnhancePlaylist' }
-            
+            # carousel is temporarily disabled because it causes lags in the main menu
+            Move-Json -n 'HomeCarousels' -t $Enable -f $Disable
+ 
+            if ($podcast_off) { Move-Json -n 'HomePin' -t $Enable -f $Disable }
 
-            if ($enhanceSongs -and [version]$offline -le [version]'1.2.25.1011') { 
-                Move-Json -n 'SmartShuffle' -t $Enable -f $Disable 
+            # disabled broken panel from 1.2.37 to 1.2.38
+            if ([version]$offline -eq [version]'1.2.37.701' -or [version]$offline -eq [version]'1.2.38.720' ) { 
+                Move-Json -n 'DevicePickerSidePanel' -t $Enable -f $Disable
             }
-            else { 
-             
-                if ([version]$offline -ge [version]'1.2.22.980') {
-                    Move-Json -n "EnhanceLikedSongs", "EnhancePlaylist"-t $Enable -f $Disable
-                }
-             
-            }
+
+            if ([version]$offline -ge [version]'1.2.41.434' -and $lyrics_block) { Move-Json -n 'Lyrics' -t $Enable -f $Disable } 
+
             if ([version]$offline -eq [version]'1.2.30.1135') { Move-Json -n 'QueueOnRightPanel' -t $Enable -f $Disable }
 
-            if (!($plus)) { Move-Json -n 'Plus' -t $Enable -f $Disable }
+            if (!($plus)) { Move-Json -n "Plus", "AlignedCurationSavedIn" -t $Enable -f $Disable }
 
-            if (!($topsearchbar)) { 
+            if (!$topsearchbar) {
                 Move-Json -n "GlobalNavBar" -t $Enable -f $Disable 
                 $Custom.GlobalNavBar.value = "control"
+                if ([version]$offline -le [version]"1.2.45.454") {
+                    Move-Json -n "RecentSearchesDropdown" -t $Enable -f $Disable 
+                }
             }
 
             if (!($funnyprogressbar)) { Move-Json -n 'HeBringsNpb' -t $Enable -f $Disable }
+
+            if (!($canvasHome)) { Move-Json -n "canvasHome", "canvasHomeAudioPreviews" -t $Enable -f $Disable }
+
+            
 
             # disable subfeed filter chips on home
             if ($homesub_off) { 
@@ -1323,8 +1278,16 @@ function Helper($paramname) {
 
             $VarJs = $webjson.VariousJs
 
+
+            if ($topsearchbar -or ([version]$offline -ne [version]"1.2.45.451" -and [version]$offline -ne [version]"1.2.45.454")) { 
+                Remove-Json -j $VarJs -p "fixTitlebarHeight"
+            }
+
             if (!($lyrics_block)) { Remove-Json -j $VarJs -p "lyrics-block" }
 
+            else { 
+                Remove-Json -j $VarJs -p "lyrics-old-on"
+            }
 
             if (!($devtools)) { Remove-Json -j $VarJs -p "dev-tools" }
 
@@ -1349,7 +1312,7 @@ function Helper($paramname) {
             }
 
             if ($urlform_goofy -and $idbox_goofy) {
-                $webjson.VariousJs.goofyhistory.replace = "`$1 const urlForm=" + '"' + $urlform_goofy + '"' + ";const idBox=" + '"' + $idbox_goofy + '"' + $webjson.VariousJs.goofyhistory.replace
+                $webjson.VariousJs.goofyhistory.replace = $webjson.VariousJs.goofyhistory.replace -f "`"$urlform_goofy`"", "`"$idbox_goofy`""
             }
             else { Remove-Json -j $VarJs -p "goofyhistory" }
             
@@ -1503,31 +1466,39 @@ function injection {
         [string]$FolderInArchive,
 
         [Alias("n")]
-        [string]$FileName,
+        [string[]]$FileNames, 
 
         [Alias("c")]
-        [string]$FileContent
+        [string[]]$FileContents,
+
+        [Alias("i")]
+        [string[]]$FilesToInject  # force only specific file/files to connect index.html otherwise all will be connected
     )
 
     $folderPathInArchive = "$($FolderInArchive)/"
 
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     $archive = [System.IO.Compression.ZipFile]::Open($ArchivePath, 'Update')
-    $stream = $null
+    
     try {
-        $entry = $archive.GetEntry($folderPathInArchive + $FileName)
-        if ($entry -eq $null) {
-            $stream = $archive.CreateEntry($folderPathInArchive + $FileName).Open()
-        }
-        else {
-            $stream = $entry.Open()
-        }
+        for ($i = 0; $i -lt $FileNames.Length; $i++) {
+            $fileName = $FileNames[$i]
+            $fileContent = $FileContents[$i]
 
-        $writer = [System.IO.StreamWriter]::new($stream)
-        $writer.Write($FileContent)
+            $entry = $archive.GetEntry($folderPathInArchive + $fileName)
+            if ($entry -eq $null) {
+                $stream = $archive.CreateEntry($folderPathInArchive + $fileName).Open()
+            }
+            else {
+                $stream = $entry.Open()
+            }
 
-        $writer.Dispose()
-        $stream.Dispose()
+            $writer = [System.IO.StreamWriter]::new($stream)
+            $writer.Write($fileContent)
+
+            $writer.Dispose()
+            $stream.Dispose()
+        }
 
         $indexEntry = $archive.Entries | Where-Object { $_.FullName -eq "index.html" }
         if ($indexEntry -ne $null) {
@@ -1537,22 +1508,33 @@ function injection {
             $reader.Dispose()
             $indexStream.Dispose()
 
+            $headTagIndex = $indexContent.IndexOf("</head>")
             $scriptTagIndex = $indexContent.IndexOf("<script")
 
-            if ($scriptTagIndex -ge 0) {
+            if ($headTagIndex -ge 0 -or $scriptTagIndex -ge 0) {
+                $filesToInject = if ($FilesToInject) { $FilesToInject } else { $FileNames }
 
-                $modifiedIndexContent = $indexContent.Insert($scriptTagIndex, "<script defer=`"defer`" src=`"/$FolderInArchive/$FileName`"></script>")
+                foreach ($fileName in $filesToInject) {
+                    if ($fileName.EndsWith(".js")) {
+                        $modifiedIndexContent = $indexContent.Insert($scriptTagIndex, "<script defer=`"defer`" src=`"/$FolderInArchive/$fileName`"></script>")
+                        $indexContent = $modifiedIndexContent
+                    }
+                    elseif ($fileName.EndsWith(".css")) {
+                        $modifiedIndexContent = $indexContent.Insert($headTagIndex, "<link href=`"/$FolderInArchive/$fileName`" rel=`"stylesheet`">")
+                        $indexContent = $modifiedIndexContent
+                    }
+                }
 
                 $indexEntry.Delete()
                 $newIndexEntry = $archive.CreateEntry("index.html").Open()
                 $indexWriter = [System.IO.StreamWriter]::new($newIndexEntry)
-                $indexWriter.Write($modifiedIndexContent)
+                $indexWriter.Write($indexContent)
                 $indexWriter.Dispose()
                 $newIndexEntry.Dispose()
 
             }
             else {
-                Write-Warning "<script tag was not found in the index.html file in the archive."
+                Write-Warning "<script or </head> tag was not found in the index.html file in the archive."
             }
         }
         else {
@@ -1565,6 +1547,7 @@ function injection {
         }
     }
 }
+
 
 
 Write-Host ($lang).ModSpoti`n
@@ -1679,16 +1662,11 @@ If ($test_spa) {
 
     # Forced exp
     extract -counts 'one' -method 'zip' -name 'xpui.js' -helper 'ForcedExp' -add $webjson.others.byspotx.add
-    
 
     # Hiding Ad-like sections or turn off podcasts from the homepage
     if ($podcast_off -or $adsections_off) {
 
-        $url = switch ($mirror) {
-            $true { "https://spotx-official.github.io/SpotX/js-helper/sectionBlock.js" }
-            default { "https://raw.githubusercontent.com/SpotX-Official/SpotX/main/js-helper/sectionBlock.js" }
-        }
-        $section = Get -Url $url
+        $section = Get -Url (Get-Link -e "/js-helper/sectionBlock.js")
         
         if ($section -ne $null) {
 
@@ -1698,8 +1676,33 @@ If ($test_spa) {
             $podcast_off, $adsections_off = $false
         }
     }
+	
+    # goofy History
+    if ($urlform_goofy -and $idbox_goofy) {
 
+        $goofy = Get -Url (Get-Link -e "/js-helper/goofyHistory.js")
+        
+        if ($goofy -ne $null) {
 
+            injection -p $xpui_spa_patch -f "spotx-helper" -n "goofyHistory.js" -c $goofy
+        }
+    }
+
+    # Static color for lyrics
+    if ($lyrics_stat) {
+        $rulesContent = Get -Url (Get-Link -e "/css-helper/lyrics-color/rules.css")
+        $colorsContent = Get -Url (Get-Link -e "/css-helper/lyrics-color/colors.css")
+
+        $colorsContent = $colorsContent -replace '{{past}}', "$($webjson.others.themelyrics.theme.$lyrics_stat.pasttext)"
+        $colorsContent = $colorsContent -replace '{{current}}', "$($webjson.others.themelyrics.theme.$lyrics_stat.current)"
+        $colorsContent = $colorsContent -replace '{{next}}', "$($webjson.others.themelyrics.theme.$lyrics_stat.next)"
+        $colorsContent = $colorsContent -replace '{{hover}}', "$($webjson.others.themelyrics.theme.$lyrics_stat.hover)"
+        $colorsContent = $colorsContent -replace '{{background}}', "$($webjson.others.themelyrics.theme.$lyrics_stat.background)"
+        $colorsContent = $colorsContent -replace '{{musixmatch}}', "$($webjson.others.themelyrics.theme.$lyrics_stat.maxmatch)"
+
+        injection -p $xpui_spa_patch -f "spotx-helper/lyrics-color" -n @("rules.css", "colors.css") -c @($rulesContent, $colorsContent) -i "rules.css"
+
+    }
     extract -counts 'one' -method 'zip' -name 'xpui.js' -helper 'VariousofXpui-js' 
 
     if ($devtools -and [version]$offline -ge [version]"1.2.35.663") {
@@ -1709,29 +1712,6 @@ If ($test_spa) {
     # Hide Collaborators icon
     if (!($hide_col_icon_off) -and !($exp_spotify)) {
         extract -counts 'one' -method 'zip' -name 'xpui-routes-playlist.js' -helper 'Collaborators'
-    }
-
-    # Static color for lyrics
-    if ($lyrics_stat) {
-        # old
-        if ([version]$offline -lt [version]"1.1.99.871") { 
-            $name_file = 'xpui-routes-lyrics.css'
-            extract -counts 'one' -method 'zip' -name $name_file -helper 'Lyrics-color'
-        }
-        # new 
-        if ([version]$offline -ge [version]"1.1.99.871") {
-            $contents = "fixcsslyricscolor2"
-            extract -counts 'one' -method 'zip' -name 'xpui.css' -helper 'FixCss'
-            if ([version]$offline -le [version]"1.2.2.582") {
-                $name_file = 'xpui-routes-lyrics.js'   
-                extract -counts 'one' -method 'zip' -name $name_file -helper 'Lyrics-color'
-            }
-        }
-        # mini lyrics
-        if ([version]$offline -ge [version]"1.2.0.1155") {
-            $name_file = 'xpui.js'   
-            extract -counts 'one' -method 'zip' -name $name_file -helper 'Lyrics-color'
-        }
     }
 
     # Add discriptions (xpui-desktop-modals.js)
@@ -1758,12 +1738,8 @@ If ($test_spa) {
             $css += $webjson.others.veryhighstream.add
         }
     }
-    # Full screen lyrics
-    if ($lyrics_stat -and [version]$offline -ge [version]"1.2.3.1107") {
-        $css += $webjson.others.lyricscolor2.add[3]
-    }
+
     if ($null -ne $css ) { extract -counts 'one' -method 'zip' -name 'xpui.css' -add $css }
-    
     
     # Old UI fix
     $contents = "fix-old-theme"
@@ -1841,6 +1817,12 @@ if ($rexex1 -and $rexex2 -and $rexex3) {
 
 # Binary patch
 extract -counts 'exe' -helper 'Binary'
+
+# fix login for old versions
+if ([version]$offline -ge [version]"1.1.87.612" -and [version]$offline -le [version]"1.2.5.1006") {
+    $login_spa = Join-Path (Join-Path $env:APPDATA 'Spotify\Apps') 'login.spa'
+    Get -Url (Get-Link -e "/res/login.spa") -OutputPath $login_spa
+}
 
 # Start Spotify
 if ($start_spoti) { Start-Process -WorkingDirectory $spotifyDirectory -FilePath $spotifyExecutable }
